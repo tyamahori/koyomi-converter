@@ -7,6 +7,11 @@
 - 明治時代`以前`は対応していない。
 
 # 使い方
+## インストール
+```
+$ composer require tyamahori/koyomi-converter
+```
+
 ## サンプル
 ```php
 <?php
