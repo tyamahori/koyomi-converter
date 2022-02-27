@@ -67,16 +67,13 @@ class Meiji implements GengoInterface
         $gengoLabel = self::$lablel;
 
         $year = (int) $this->date->format('Y') - self::$diffYear;
+        $gengoYear = match (true) {
+            $year === 1 => "元年",
+            $year <= 9 => "0{$year}年",
+            default => "{$year}年",
+        };
 
-        if (1 < $year && $year < 10) {
-            return "{$gengoLabel}0{$year}年{$this->date->format('m月d日')}";
-        }
-
-        if ($year === 1) {
-            return "{$gengoLabel}元年{$this->date->format('m月d日')}";
-        }
-
-        return "$gengoLabel{$year}年{$this->date->format('m月d日')}";
+        return "$gengoLabel$gengoYear{$this->date->format('m月d日')}";
     }
 
     /**
