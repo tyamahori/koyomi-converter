@@ -18,10 +18,12 @@ class GengoFactoryTest extends TestCase
      * @throws Exception
      * @dataProvider dataSource
      */
-    public function 和暦が表示される(DateTimeImmutable $date, string $expectedGengo): void
-    {
+    public function 和暦が表示される(
+        DateTimeImmutable $date,
+        string $expectedGengo
+    ): void {
         $gengo = GengoFactory::create($date);
-        self::assertSame($expectedGengo, $gengo::label());
+        self::assertSame($expectedGengo, $gengo->gengoDate());
     }
 
     /**
@@ -30,15 +32,15 @@ class GengoFactoryTest extends TestCase
     public function dataSource(): array
     {
         return [
-            '令和の始まり' => [new DateTimeImmutable('2019-05-01'), '令和'],
-            '平成の終わり' => [new DateTimeImmutable('2019-04-30'), '平成'],
-            '平成の始まり' => [new DateTimeImmutable('1989-01-08'), '平成'],
-            '昭和の終わり' => [new DateTimeImmutable('1989-01-07'), '昭和'],
-            '昭和の始まり' => [new DateTimeImmutable('1926-12-25'), '昭和'],
-            '大正の終わり' => [new DateTimeImmutable('1926-12-24'), '大正'],
-            '大正の始まり' => [new DateTimeImmutable('1912-07-30'), '大正'],
-            '明治の終わり' => [new DateTimeImmutable('1912-07-29'), '明治'],
-            '明治の始まり' => [new DateTimeImmutable('1868-01-25'), '明治'],
+            '令和の始まり' => [new DateTimeImmutable('2019-05-01'), '令和元年05月01日'],
+            '平成の終わり' => [new DateTimeImmutable('2019-04-30'), '平成31年04月30日'],
+            '平成の始まり' => [new DateTimeImmutable('1989-01-08'), '平成元年01月08日'],
+            '昭和の終わり' => [new DateTimeImmutable('1989-01-07'), '昭和64年01月07日'],
+            '昭和の始まり' => [new DateTimeImmutable('1926-12-25'), '昭和元年12月25日'],
+            '大正の終わり' => [new DateTimeImmutable('1926-12-24'), '大正15年12月24日'],
+            '大正の始まり' => [new DateTimeImmutable('1912-07-30'), '大正元年07月30日'],
+            '明治の終わり' => [new DateTimeImmutable('1912-07-29'), '明治45年07月29日'],
+            '明治の始まり' => [new DateTimeImmutable('1868-01-25'), '明治元年01月25日'],
         ];
     }
 
