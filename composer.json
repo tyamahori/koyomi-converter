@@ -1,0 +1,33 @@
+{
+  "name": "tyamahori/koyomi-converter",
+  "description": "seireki <-> wareki converter",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "tyamahori",
+      "email": "tyamahori@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Tyamahori\\Koyomi\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
+  "require": {
+    "php": "^8.1"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.5",
+    "phpstan/phpstan": "^1.4"
+  },
+  "scripts": {
+    "test": "./vendor/bin/phpunit ./tests",
+    "phpstan": "./vendor/bin/phpstan analyse -c phpstan.neon"
+  }
+}

@@ -1,0 +1,11 @@
+version: '3.9'
+
+services:
+  app:
+    build: .
+    image: koyomi-app
+    container_name: koyomi-app
+    volumes:
+      - ..:/app
+    tty: true
+    working_dir: /app
