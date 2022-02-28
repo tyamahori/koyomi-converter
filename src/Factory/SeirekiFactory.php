@@ -2,7 +2,6 @@
 
 namespace Tyamahori\Koyomi\Factory;
 
-use Exception;
 use InvalidArgumentException;
 use Tyamahori\Koyomi\ValueObject\Gengo\Heisei;
 use Tyamahori\Koyomi\ValueObject\Gengo\Meiji;
@@ -13,10 +12,14 @@ use Tyamahori\Koyomi\ValueObject\Gengo\Taisho;
 class SeirekiFactory implements SeirekiFactoryInterface
 {
     /**
-     * @throws Exception
+     * @param string $gengoCode
+     * @param int $gengoYear
+     * @return int
      */
-    public static function year(string $gengoCode, int $gengoYear): int
-    {
+    public static function year(
+        string $gengoCode,
+        int $gengoYear
+    ): int {
         return match ($gengoCode) {
             Reiwa::code() => Reiwa::seirekiYear($gengoYear),
             Heisei::code() => Heisei::seirekiYear($gengoYear),
