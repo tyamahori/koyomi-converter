@@ -10,17 +10,17 @@ class Showa implements GengoInterface
 {
     private static string $lablel = '昭和';
     private static string $code = 'showa';
-    private static string $startDate = '19261225';
+    private static int $startDate = 19261225;
     private static int $diffYear = 1925;
 
     /**
      * @param DateTimeImmutable $date
-     * @throws Exception
+     * @throws InvalidArgumentException
      */
     public function __construct(
         private DateTimeImmutable $date
     ) {
-        if ($date < self::startDate()) {
+        if ((int) $date->format('Ymd') < self::$startDate) {
             $gengoLabel = self::$lablel;
             throw new InvalidArgumentException("引数の日付が{$gengoLabel}の開始日以前です。");
         }
@@ -48,7 +48,7 @@ class Showa implements GengoInterface
      */
     public static function startDate(): DateTimeImmutable
     {
-        return new DateTimeImmutable(self::$startDate);
+        return new DateTimeImmutable((string) self::$startDate);
     }
 
     /**
@@ -79,11 +79,10 @@ class Showa implements GengoInterface
     /**
      * @param DateTimeImmutable $date
      * @return bool
-     * @throws Exception
      */
     public static function canApply(DateTimeImmutable $date): bool
     {
-        return $date >= self::startDate();
+        return (int) $date->format('Ymd') >= self::$startDate;
     }
 
     /**
@@ -93,5 +92,21 @@ class Showa implements GengoInterface
     public static function seirekiYear(int $gengoYear): int
     {
         return self::$diffYear + $gengoYear;
+    }
+
+    /**
+     * @return int
+     */
+    public function month(): int
+    {
+        return (int) $this->date->format('n');
+    }
+
+    /**
+     * @return int
+     */
+    public function date(): int
+    {
+        return (int) $this->date->format('j');
     }
 }
