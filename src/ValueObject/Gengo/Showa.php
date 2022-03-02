@@ -48,7 +48,7 @@ class Showa implements GengoInterface
      */
     public static function startDate(): DateTimeImmutable
     {
-        return new DateTimeImmutable(self::$startDate);
+        return new DateTimeImmutable((string) self::$startDate);
     }
 
     /**

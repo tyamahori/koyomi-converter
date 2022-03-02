@@ -13,22 +13,14 @@ class Meiji implements GengoInterface
     private static int $startDate = 18680125;
     private static int $diffYear = 1867;
 
-    private int $inputSeirekiYear;
-    private string $inputMonth;
-    private string $inputDate;
-
     /**
      * @param DateTimeImmutable $date
      * @throws InvalidArgumentException
      */
     public function __construct(
-        DateTimeImmutable $date
+        private DateTimeImmutable $date
     ) {
         $this->validateParameter($date);
-
-        $this->inputSeirekiYear = (int) $date->format('Y');
-        $this->inputMonth = $date->format('m');
-        $this->inputDate = $date->format('d');
     }
 
     /**
@@ -65,7 +57,7 @@ class Meiji implements GengoInterface
      */
     public static function startDate(): DateTimeImmutable
     {
-        return new DateTimeImmutable(self::$startDate);
+        return new DateTimeImmutable((string) self::$startDate);
     }
 
     /**
@@ -73,7 +65,7 @@ class Meiji implements GengoInterface
      */
     public function gengoYear(): int
     {
-        return $this->inputSeirekiYear - self::$diffYear;
+        return (int) $this->date->format('Y') - self::$diffYear;
     }
 
     /**
@@ -83,13 +75,14 @@ class Meiji implements GengoInterface
     {
         $gengoLabel = self::$lablel;
 
+        $year = (int) $this->date->format('Y') - self::$diffYear;
         $gengoYear = match (true) {
-            $this->gengoYear() === 1 => "元年",
-            $this->gengoYear() <= 9 => "0{$this->gengoYear()}年",
-            default => "{$this->gengoYear()}年",
+            $year === 1 => "元年",
+            $year <= 9 => "0{$year}年",
+            default => "{$year}年",
         };
 
-        return "$gengoLabel$gengoYear{$this->inputMonth}月{$this->inputDate}日";
+        return "$gengoLabel$gengoYear{$this->date->format('m月d日')}";
     }
 
     /**
@@ -115,7 +108,7 @@ class Meiji implements GengoInterface
      */
     public function month(): int
     {
-        return $this->inputMonth;
+        return (int) $this->date->format('n');
     }
 
     /**
@@ -123,6 +116,6 @@ class Meiji implements GengoInterface
      */
     public function date(): int
     {
-        return $this->inputDate;
+        return (int) $this->date->format('j');
     }
 }
