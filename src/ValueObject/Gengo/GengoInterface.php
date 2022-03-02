@@ -42,4 +42,14 @@ interface GengoInterface
      * @return int
      */
     public static function seirekiYear(int $gengoYear): int;
+
+    /**
+     * @return int
+     */
+    public function month(): int;
+
+    /**
+     * @return int
+     */
+    public function date(): int;
 }

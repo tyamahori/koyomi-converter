@@ -10,17 +10,34 @@ class Meiji implements GengoInterface
 {
     private static string $lablel = '明治';
     private static string $code = 'meiji';
-    private static string $startDate = '18680125';
+    private static int $startDate = 18680125;
     private static int $diffYear = 1867;
+
+    private int $inputSeirekiYear;
+    private string $inputMonth;
+    private string $inputDate;
 
     /**
      * @param DateTimeImmutable $date
-     * @throws Exception
+     * @throws InvalidArgumentException
      */
     public function __construct(
-        private DateTimeImmutable $date
+        DateTimeImmutable $date
     ) {
-        if ($date < self::startDate()) {
+        $this->validateParameter($date);
+
+        $this->inputSeirekiYear = (int) $date->format('Y');
+        $this->inputMonth = $date->format('m');
+        $this->inputDate = $date->format('d');
+    }
+
+    /**
+     * @param DateTimeImmutable $date
+     * @return void
+     */
+    private function validateParameter(DateTimeImmutable $date): void
+    {
+        if ((int) $date->format('Ymd') < self::$startDate) {
             $gengoLabel = self::$lablel;
             throw new InvalidArgumentException("引数の日付が{$gengoLabel}の開始日以前です。");
         }
@@ -56,7 +73,7 @@ class Meiji implements GengoInterface
      */
     public function gengoYear(): int
     {
-        return (int) $this->date->format('Y') - self::$diffYear;
+        return $this->inputSeirekiYear - self::$diffYear;
     }
 
     /**
@@ -66,24 +83,22 @@ class Meiji implements GengoInterface
     {
         $gengoLabel = self::$lablel;
 
-        $year = (int) $this->date->format('Y') - self::$diffYear;
         $gengoYear = match (true) {
-            $year === 1 => "元年",
-            $year <= 9 => "0{$year}年",
-            default => "{$year}年",
+            $this->gengoYear() === 1 => "元年",
+            $this->gengoYear() <= 9 => "0{$this->gengoYear()}年",
+            default => "{$this->gengoYear()}年",
         };
 
-        return "$gengoLabel$gengoYear{$this->date->format('m月d日')}";
+        return "$gengoLabel$gengoYear{$this->inputMonth}月{$this->inputDate}日";
     }
 
     /**
      * @param DateTimeImmutable $date
      * @return bool
-     * @throws Exception
      */
     public static function canApply(DateTimeImmutable $date): bool
     {
-        return $date >= self::startDate();
+        return (int) $date->format('Ymd') >= self::$startDate;
     }
 
     /**
@@ -93,5 +108,21 @@ class Meiji implements GengoInterface
     public static function seirekiYear(int $gengoYear): int
     {
         return self::$diffYear + $gengoYear;
+    }
+
+    /**
+     * @return int
+     */
+    public function month(): int
+    {
+        return $this->inputMonth;
+    }
+
+    /**
+     * @return int
+     */
+    public function date(): int
+    {
+        return $this->inputDate;
     }
 }

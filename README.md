@@ -19,14 +19,13 @@ $ composer require tyamahori/koyomi-converter
 namespace Tyamahori\Koyomi;
 
 use DateTimeImmutable;
-use Exception;
 use Tyamahori\Koyomi\Factory\GengoFactory;
 use Tyamahori\Koyomi\Factory\SeirekiFactory;
 
 class Example
 {
     /**
-     * @throws Exception
+     * @return void
      */
     public function exampleGengo(): void
     {
@@ -39,15 +38,16 @@ class Example
         echo $gengo::code() . PHP_EOL; // reiwa;
         echo $gengo->gengoDate() . PHP_EOL; // 令和04年02月27日
         echo $gengo->gengoYear() . PHP_EOL; // 4
+        echo $gengo->month() . PHP_EOL; // 2
+        echo $gengo->date() . PHP_EOL; // 27
         echo $gengo::seirekiYear(4) . PHP_EOL; // 2022
         echo $gengo::startDate()->format('Y-m-d') . PHP_EOL; // 2019-05-01
     }
 
     /**
      * @return void
-     * @throws Exception
      */
-    public function exampleSeireki()
+    public function exampleSeireki(): void
     {
         /**
          * 和暦から西暦にする場合のメソッド

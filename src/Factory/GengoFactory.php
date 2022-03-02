@@ -3,7 +3,6 @@
 namespace Tyamahori\Koyomi\Factory;
 
 use DateTimeImmutable;
-use Exception;
 use InvalidArgumentException;
 use Tyamahori\Koyomi\ValueObject\Gengo\GengoInterface;
 use Tyamahori\Koyomi\ValueObject\Gengo\Heisei;
@@ -17,7 +16,7 @@ class GengoFactory implements GengoFactoryInterface
     /**
      * @param DateTimeImmutable $date
      * @return GengoInterface
-     * @throws Exception
+     * @throws InvalidArgumentException
      */
     public static function create(DateTimeImmutable $date): GengoInterface
     {
