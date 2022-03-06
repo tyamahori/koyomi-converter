@@ -3,7 +3,6 @@
 namespace Tyamahori\Koyomi\ValueObject\Gengo;
 
 use DateTimeImmutable;
-use Exception;
 use InvalidArgumentException;
 
 class Heisei implements GengoInterface
@@ -43,36 +42,11 @@ class Heisei implements GengoInterface
     }
 
     /**
-     * @throws Exception
-     */
-    public static function startDate(): DateTimeImmutable
-    {
-        return new DateTimeImmutable((string) self::$startDate);
-    }
-
-    /**
      * @return int
      */
     public function gengoYear(): int
     {
         return (int) $this->date->format('Y') - self::$diffYear;
-    }
-
-    /**
-     * @return string
-     */
-    public function gengoDate(): string
-    {
-        $gengoLabel = self::$lablel;
-
-        $year = (int) $this->date->format('Y') - self::$diffYear;
-        $gengoYear = match (true) {
-            $year === 1 => "元年",
-            $year <= 9 => "0{$year}年",
-            default => "{$year}年",
-        };
-
-        return "$gengoLabel$gengoYear{$this->date->format('m月d日')}";
     }
 
     /**
@@ -94,18 +68,10 @@ class Heisei implements GengoInterface
     }
 
     /**
-     * @return int
+     * @return DateTimeImmutable
      */
-    public function month(): int
+    public function datetimeImmutable(): DateTimeImmutable
     {
-        return (int) $this->date->format('n');
-    }
-
-    /**
-     * @return int
-     */
-    public function date(): int
-    {
-        return (int) $this->date->format('j');
+        return $this->date;
     }
 }

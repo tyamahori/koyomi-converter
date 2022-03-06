@@ -17,11 +17,6 @@ interface GengoInterface
     public static function code(): string;
 
     /**
-     * @return DateTimeImmutable
-     */
-    public static function startDate(): DateTimeImmutable;
-
-    /**
      * @param DateTimeImmutable $date
      * @return bool
      */
@@ -33,23 +28,13 @@ interface GengoInterface
     public function gengoYear(): int;
 
     /**
-     * @return string
-     */
-    public function gengoDate(): string;
-
-    /**
      * @param int $gengoYear
      * @return int
      */
     public static function seirekiYear(int $gengoYear): int;
 
     /**
-     * @return int
+     * @return DateTimeImmutable
      */
-    public function month(): int;
-
-    /**
-     * @return int
-     */
-    public function date(): int;
+    public function datetimeImmutable(): DateTimeImmutable;
 }
