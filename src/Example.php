@@ -20,12 +20,8 @@ class Example
         $gengo = GengoFactory::create(new DateTimeImmutable('2022-02-27'));
         echo $gengo::label() . PHP_EOL; // 令和;
         echo $gengo::code() . PHP_EOL; // reiwa;
-        echo $gengo->gengoDate() . PHP_EOL; // 令和04年02月27日
         echo $gengo->gengoYear() . PHP_EOL; // 4
-        echo $gengo->month() . PHP_EOL; // 2
-        echo $gengo->date() . PHP_EOL; // 27
         echo $gengo::seirekiYear(4) . PHP_EOL; // 2022
-        echo $gengo::startDate()->format('Y-m-d') . PHP_EOL; // 2019-05-01
     }
 
     /**
